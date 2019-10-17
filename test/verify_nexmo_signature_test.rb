@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../verify_nexmo_signature'
+require_relative '../lib/verify_nexmo_signature'
 
 class VerifyNexmoSignatureTest < Minitest::Test
   def secret

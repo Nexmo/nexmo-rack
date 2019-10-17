@@ -29,7 +29,7 @@ $ git clone git@github.com:Nexmo/rack-verify-signature-middleware.git
 
 From within IRB, for example, you can run it as follows:
 ``` ruby
-irb> require './verify_nexmo_signature'
+irb> require './lib/verify_nexmo_signature'
 => true
 irb> verify = VerifyNexmoSignature.new('secret')
 => #<VerifyNexmoSignature:0x00007f9e0d84c030 @secret="secret">
