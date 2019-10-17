@@ -21,33 +21,31 @@ The verify signature middleware can be used standalone or integrated into a Ruby
 
 ### As a standalone application
 
-Clone the repository:
+Install the gem on your system:
 
 ``` shell
-$ git clone git@github.com:Nexmo/rack-verify-signature-middleware.git
+$ gem install verify_nexmo_signature
 ```
 
-From within IRB, for example, you can run it as follows:
+Require it from within your application, instantiate an instance and use it:
+
 ``` ruby
-irb> require './lib/verify_nexmo_signature'
-=> true
-irb> verify = VerifyNexmoSignature.new('secret')
-=> #<VerifyNexmoSignature:0x00007f9e0d84c030 @secret="secret">
-irb> verify.call({'a' => '1', 'b' => '2', 'timestamp' => '1461605396', 'sig' => '6af838ef94998832dbfc29020b564830'})
-=> true
-irb> verify.call({'a' => '1', 'b' => '2', 'timestamp' => '1461605396', 'sig' => 'xxxx'})
-=> false
+require 'verify_nexmo_signature'
+
+verify = VerifyNexmoSignature.new('secret')
+
+response = verify.call({'a' => '1', 'b' => '2', 'timestamp' => '1461605396', 'sig' => '6af838ef94998832dbfc29020b564830'})
+
+puts response.inspect
 ```
 
 ### Mounted into a Rails Application
 
-Clone the repository:
+Require it in your `Gemfile`:
 
-``` shell
-$ git clone git@github.com:Nexmo/rack-verify-signature-middleware.git
+```ruby
+gem verify_nexmo_signature
 ```
-
-Copy `verify_nexmo_signature.rb` from the cloned folder into the `app/middleware` folder of your Rails application.
 
 And then add the middleware to your `config/application.rb` file to initialize it with your application:
 
