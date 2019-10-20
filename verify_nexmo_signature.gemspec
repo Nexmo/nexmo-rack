@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version     = VerifyNexmoSignature::VERSION
   spec.authors     = ["Nexmo"]
   spec.email       = ["devrel@nexmo.com"]
-  spec.homepage    = "https://github.com/Nexmo/verify-nexmo-signature"
+  spec.homepage    = "https://github.com/Nexmo/verify-nexmo-signature-middleware"
   spec.summary     = "This is middleware to verify Nexmo signatures. To use it you\'ll need a Nexmo account. Sign up for free at https://www.nexmo.com"
   spec.description = "Middleware to verify Nexmo signatures"
   spec.license     = "MIT"
@@ -22,9 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('coveralls', '~> 0.8.15')
 
   spec.metadata = {
-    'homepage' => 'https://github.com/Nexmo/verify-nexmo-signature',
-    'source_code_uri' => 'https://github.com/Nexmo/verify-nexmo-signature',
-    'bug_tracker_uri' => 'https://github.com/Nexmo/verify-nexmo-signature/issues',
-    'changelog_uri' => 'https://github.com/Nexmo/verify-nexmo-signature/blog/master/CHANGES.md'
+    'homepage' => 'https://github.com/Nexmo/verify-nexmo-signature-middleware',
+    'source_code_uri' => 'https://github.com/Nexmo/verify-nexmo-signature-middleware',
+    'bug_tracker_uri' => 'https://github.com/Nexmo/verify-nexmo-signature-middleware/issues',
+    'changelog_uri' => 'https://github.com/Nexmo/verify-nexmo-signature-middleware/blog/master/CHANGES.md'
 }
 end
