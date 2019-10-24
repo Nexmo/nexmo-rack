@@ -3,6 +3,10 @@
 require_relative '../lib/verify_nexmo_signature'
 
 describe VerifyNexmoSignature do
+  before do
+    ENV['NEXMO_API_SIGNATURE'] = 'secret'
+  end
+
   let(:app_valid_sig) do
     {
       'HTTP_REFERER' => '',
@@ -48,7 +52,7 @@ describe VerifyNexmoSignature do
   end
 
   let :middleware_valid_sig do
-    VerifyNexmoSignature.new(app_valid_sig, secret)
+    VerifyNexmoSignature.new(app_valid_sig)
   end
 
   it 'does something' do

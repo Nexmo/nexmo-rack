@@ -2,21 +2,22 @@
 
 require 'digest/md5'
 require 'jwt'
+require 'nexmo'
 require 'rack'
 
 # Verify Nexmo Signatures
 class VerifyNexmoSignature
-  def initialize(app, secret)
+  def initialize(app)
     @app = app
-    @secret = secret
   end
 
   def call(_secret, env)
     req = Rack::Request.new(env)
     params = req.env['REQUEST_BODY'].dup
     signature = params.delete('sig')
+    verify = nexmo_client
 
-    if ::JWT::SecurityUtils.secure_compare(signature, digest(params))
+    if verify.check(params)
       @app.call(env)
     else
       [403, {}, '']
@@ -25,6 +26,19 @@ class VerifyNexmoSignature
 
   private
 
+  def nexmo_client
+    if ENV['NEXMO_API_SIGNATURE']
+      verify = Nexmo::Signature.new(
+        secret: ENV['NEXMO_API_SIGNATURE']
+      )
+    elsif Rails.application.credentials.nexmo
+      verify = Nexmo::Signature.new(
+        signature_secret: Rails.application.credentials.nexmo[:api_signature]
+      )
+    end
+    verify
+  end
+  
   def digest(params)
     md5 = Digest::MD5.new
 
