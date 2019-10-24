@@ -27,16 +27,10 @@ Install the gem on your system:
 $ gem install verify_nexmo_signature
 ```
 
-Require it from within your application, instantiate an instance and use it:
+Then require it from within your `config.ru` Rack configuration:
 
 ``` ruby
-require 'verify_nexmo_signature'
-
-verify = VerifyNexmoSignature.new('secret')
-
-response = verify.call({'a' => '1', 'b' => '2', 'timestamp' => '1461605396', 'sig' => '6af838ef94998832dbfc29020b564830'})
-
-puts response.inspect
+use VerifyNexmoSignature::Middleware
 ```
 
 ### Mounted into a Rails Application
