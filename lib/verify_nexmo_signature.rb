@@ -29,7 +29,7 @@ class VerifyNexmoSignature
   def nexmo_client
     if ENV['NEXMO_API_SIGNATURE']
       verify = Nexmo::Signature.new(
-        secret: ENV['NEXMO_API_SIGNATURE']
+        signature_secret: ENV['NEXMO_API_SIGNATURE']
       )
     elsif Rails.application.credentials.nexmo
       verify = Nexmo::Signature.new(
