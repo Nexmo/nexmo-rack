@@ -31,17 +31,5 @@ module VerifyNexmoSignature
       end
       verify
     end
-    
-    def digest(params)
-      md5 = Digest::MD5.new
-
-      params.sort.each do |k, v|
-        md5.update("&#{k}=#{v}")
-      end
-
-      md5.update(@secret)
-
-      md5.hexdigest
-    end
   end
 end
