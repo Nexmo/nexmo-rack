@@ -49,11 +49,19 @@ describe VerifyNexmoSignature do
     }
   end
 
-  let :middleware_valid_sig do
+  let :middleware do
     VerifyNexmoSignature::Middleware.new(app)
   end
 
-  it 'does something' do
-    puts middleware_valid_sig.call(app_valid_params)
+  it 'returns a 200 HTTP response code upon successful validation' do
+    response = middleware.call(app_valid_params)
+
+    expect(response[0]).to eq(200)
+  end
+
+  it 'returns a 403 HTTP response code upon unsuccessful validation' do
+    response = middleware.call(app_invalid_params)
+
+    expect(response[0]).to eq(403)
   end
 end
