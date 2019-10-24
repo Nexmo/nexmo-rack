@@ -7,7 +7,9 @@ describe VerifyNexmoSignature do
     ENV['NEXMO_API_SIGNATURE'] = 'secret'
   end
 
-  let(:app_valid_sig) do
+  let(:app) { ->(env) { [200, env, "app"] } }
+  
+  let(:app_valid_params) do
     {
       'HTTP_REFERER' => '',
       'PATH_INFO' => 'foo',
@@ -22,12 +24,12 @@ describe VerifyNexmoSignature do
         'timestamp' => '1461605396',
         'to' => '14849970568',
         'type' => 'text',
-        'sig' => '6af838ef94998832dbfc29020b564830'
+        'sig' => '56859cb8e7ba1da0bb9c8ec0e703feb0'
       }
     }
   end
 
-  let(:app_invalid_sig) do
+  let(:app_invalid_params) do
     {
       'HTTP_REFERER' => '',
       'PATH_INFO' => 'foo',
@@ -47,15 +49,11 @@ describe VerifyNexmoSignature do
     }
   end
 
-  let(:secret) do
-    'secret'
-  end
-
   let :middleware_valid_sig do
-    VerifyNexmoSignature.new(app_valid_sig)
+    VerifyNexmoSignature::Middleware.new(app)
   end
 
   it 'does something' do
-    puts middleware_valid_sig.call(secret, app_valid_sig)
+    puts middleware_valid_sig.call(app_valid_params)
   end
 end
