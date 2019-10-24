@@ -53,14 +53,6 @@ And then add the middleware to your `config/application.rb` file to initialize i
 config.middleware.use VerifyNexmoSignature
 ```
 
-Then from within your application you can instantiate and utilize it as follows, passing in the signature secret parameter:
-
-```ruby
-verify = VerifyNexmoSignature.new(@secret)
-
-verify.call({'a' => '1', 'b' => '2', 'timestamp' => '1461605396', 'sig' => '6af838ef94998832dbfc29020b564830'})
-```
-
 ## Contributing
 We ❤️ contributions from everyone! [Bug reports](https://github.com/Nexmo/rack-verify-signature-middleware/issues), [bug fixes](https://github.com/Nexmo/rack-verify-signature-middleware/pulls) and feedback on the library is always appreciated. Look at the [Contributor Guidelines](https://github.com/Nexmo/rack-verify-signature-middleware/blob/master/CONTRIBUTING.md) for more information.
 
