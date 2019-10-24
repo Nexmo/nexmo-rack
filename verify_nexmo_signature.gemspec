@@ -16,8 +16,6 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{lib}/**/*", "LICENSE.txt", "README.md"]
 
-  spec.add_dependency('jwt', '~> 2')
-  spec.add_dependency('digest', '~> 2.7.6')
   spec.add_dependency('nexmo', '~> 6.0.1')
   spec.add_dependency('rack', '~> 2.0.7')
   spec.add_development_dependency('simplecov', '~> 0.16')
