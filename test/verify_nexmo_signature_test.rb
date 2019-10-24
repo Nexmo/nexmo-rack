@@ -7,45 +7,36 @@ describe VerifyNexmoSignature do
     ENV['NEXMO_API_SIGNATURE'] = 'secret'
   end
 
-  let(:app) { ->(env) { [200, env, "app"] } }
-  
+  let(:app) do
+    Rack::Builder.new do
+      use VerifyNexmoSignature::Middleware
+      run(->(env) { [200, env, "app"] })
+    end 
+  end  
+
   let(:app_valid_params) do
     {
-      'HTTP_REFERER' => '',
-      'PATH_INFO' => 'foo',
-      'QUERY_STRING' => 'bar',
-      'REQUEST_PATH' => 'path',
-      'REQUEST_URI' => 'uri',
-      'REQUEST_BODY' => {
-        'message-timestamp' => '2013-11-21 17:31:42',
-        'messageId' => '030000002A264B8B',
-        'msisdn' => '14843472194',
-        'text' => 'Test',
-        'timestamp' => '1461605396',
-        'to' => '14849970568',
-        'type' => 'text',
-        'sig' => '56859cb8e7ba1da0bb9c8ec0e703feb0'
-      }
+      'message-timestamp' => '2013-11-21 17:31:42',
+      'messageId' => '030000002A264B8B',
+      'msisdn' => '14843472194',
+      'text' => 'Test',
+      'timestamp' => '1461605396',
+      'to' => '14849970568',
+      'type' => 'text',
+      'sig' => '56859cb8e7ba1da0bb9c8ec0e703feb0'
     }
   end
 
   let(:app_invalid_params) do
     {
-      'HTTP_REFERER' => '',
-      'PATH_INFO' => 'foo',
-      'QUERY_STRING' => 'bar',
-      'REQUEST_PATH' => 'path',
-      'REQUEST_URI' => 'uri',
-      'REQUEST_BODY' => {
-        'message-timestamp' => '2013-11-21 17:31:42',
-        'messageId' => '030000002A264B8B',
-        'msisdn' => '14843472194',
-        'text' => 'Test',
-        'timestamp' => '1461605396',
-        'to' => '14849970568',
-        'type' => 'text',
-        'sig' => 'xxxx'
-      }
+      'message-timestamp' => '2013-11-21 17:31:42',
+      'messageId' => '030000002A264B8B',
+      'msisdn' => '14843472194',
+      'text' => 'Test',
+      'timestamp' => '1461605396',
+      'to' => '14849970568',
+      'type' => 'text',
+      'sig' => 'xxxx'
     }
   end
 
@@ -53,15 +44,19 @@ describe VerifyNexmoSignature do
     VerifyNexmoSignature::Middleware.new(app)
   end
 
-  it 'returns a 200 HTTP response code upon successful validation' do
-    response = middleware.call(app_valid_params)
-
+  it 'returns a 200 HTTP response code if it is called directly and not a POST request' do
+    response = middleware.call(app_invalid_params)
     expect(response[0]).to eq(200)
   end
 
-  it 'returns a 403 HTTP response code upon unsuccessful validation' do
-    response = middleware.call(app_invalid_params)
+  it 'returns a 200 HTTP response for a POST request with a valid verification' do
+    response = Rack::MockRequest.new(app).post('/', params: app_valid_params)
 
-    expect(response[0]).to eq(403)
+    expect(response.status).to eq(200)
+  end
+
+  it 'returns a 403 HTTP response for a POST request with an invalid verification' do
+    response = Rack::MockRequest.new(app).post('/', params: app_invalid_params)
+    expect(response.status).to eq(403)
   end
 end

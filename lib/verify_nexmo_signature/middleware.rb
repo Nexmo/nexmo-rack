@@ -7,13 +7,16 @@ module VerifyNexmoSignature
 
     def call(env)
       req = ::Rack::Request.new(env)
-      params = req.env['REQUEST_BODY'].dup
-      verify = nexmo_client
-
-      if verify.check(params)
-        @app.call(env)
+      if req.post?
+        params = req.params.dup 
+        verify = nexmo_client
+        if verify.check(params)
+          @app.call(env)
+        else
+          [403, {}, ['']]
+        end
       else
-        [403, {}, '']
+        @app.call(env)
       end
     end
 

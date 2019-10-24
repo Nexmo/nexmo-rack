@@ -33,6 +33,8 @@ Then require it from within your `config.ru` Rack configuration:
 use VerifyNexmoSignature::Middleware
 ```
 
+An example [config.ru](examples/config.ru.example) can be found in the examples folder. More information on getting up and running with Rack can be found at the [Rack GitHub repository](https://github.com/rack/rack/wiki/(tutorial)-rackup-howto#with-a-ru-config-file).
+
 ### Mounted into a Rails Application
 
 Require it in your `Gemfile`:
