@@ -1,7 +1,7 @@
 $:.push File.expand_path("lib", __dir__)
 
 # Maintain your gem's version:
-require "lib/version"
+require_relative "lib/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{lib}/**/*", "LICENSE.txt", "README.md"]
 
-  spec.add_dependency('jwt', '~> 2')
-  spec.add_dependency('digest', '~> 2.7.6')
+  spec.add_runtime_dependency('nexmo', '~> 6.0.1')
+  spec.add_runtime_dependency('rack', '~> 2.0', '>= 2.0.7')
   spec.add_development_dependency('simplecov', '~> 0.16')
   spec.add_development_dependency('coveralls', '~> 0.8.15')
 
@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/Nexmo/rack-verify-signature-middleware',
     'bug_tracker_uri' => 'https://github.com/Nexmo/rack-verify-signature-middleware/issues',
     'changelog_uri' => 'https://github.com/Nexmo/rack-verify-signature-middleware/blog/master/CHANGES.md'
-}
+  }
 end
+

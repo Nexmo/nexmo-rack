@@ -1,0 +1,14 @@
+require 'verify_nexmo_signature'
+
+#\ -w -p 8765  
+use Rack::Reloader, 0  
+use Rack::ContentLength
+use VerifyNexmoSignature::Middleware
+
+class MyApp
+  def call(env)
+    [200, {'Content-Type' => 'text/html'}, ['a sample Rack app']]
+  end
+end
+
+run MyApp.new
