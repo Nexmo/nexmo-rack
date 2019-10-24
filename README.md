@@ -46,7 +46,7 @@ gem verify_nexmo_signature
 And then add the middleware to your `config/application.rb` file to initialize it with your application:
 
 ```ruby
-config.middleware.use VerifyNexmoSignature
+config.middleware.use VerifyNexmoSignature::Middleware
 ```
 
 ## Contributing
