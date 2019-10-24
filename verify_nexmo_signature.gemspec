@@ -1,4 +1,3 @@
-  
 $:.push File.expand_path("lib", __dir__)
 
 # Maintain your gem's version:
@@ -29,5 +28,6 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/Nexmo/rack-verify-signature-middleware',
     'bug_tracker_uri' => 'https://github.com/Nexmo/rack-verify-signature-middleware/issues',
     'changelog_uri' => 'https://github.com/Nexmo/rack-verify-signature-middleware/blog/master/CHANGES.md'
-}
+  }
 end
+
