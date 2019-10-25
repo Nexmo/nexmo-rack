@@ -17,7 +17,7 @@ This middleware utilizes the following dependencies:
 
 ## Installation and Usage
 
-The verify signature middleware can be used standalone or integrated into a Ruby application. The middleware will return `true` if the signature is valid, or `false` if it is not.
+The verify signature middleware can be used standalone or integrated into a Ruby application. The middleware will return a `403` HTTP status code if the signature is not valid, and will continue the application if it is valid.
 
 ### As a standalone application
 
