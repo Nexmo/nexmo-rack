@@ -29,18 +29,31 @@ module Nexmo
       private
 
       def nexmo_client
+        Nexmo::Signature.new(signature_secret)
+        # To be uncommented with the next release of the nexmo-ruby gem
+        # Nexmo::Signature.new(signature_secret, signature_method)
+      end
+
+      def signature_secret
         if ENV['NEXMO_SIGNATURE_SECRET']
-          Nexmo::Signature.new(
-            ENV['NEXMO_SIGNATURE_SECRET']
-          )
+          ENV['NEXMO_SIGNATURE_SECRET']
         elsif defined?(Rails) && Rails.application.credentials.nexmo
-          Nexmo::Signature.new(
-            Rails.application.credentials.nexmo[:api_signature_secret]
-          )
+          Rails.application.credentials.nexmo[:signature_secret]
         else
-          raise "No credentials found for Nexmo::Rack::VerifySignature"
+          raise "No signature credentials found for Nexmo::Rack::VerifySignature"
         end
       end
+
+      def signature_method
+        if ENV['NEXMO_SIGNATURE_METHOD']
+          ENV['NEXMO_SIGNATURE_METHOD']
+        elsif defined?(Rails) && Rails.application.credentials.nexmo
+          Rails.application.credentials.nexmo[:signature_method]
+        else
+          raise "No signature method found for Nexmo::Rack::VerifySignature"
+        end
+      end
+
     end
   end
 end

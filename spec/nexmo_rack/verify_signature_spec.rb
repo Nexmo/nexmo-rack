@@ -5,6 +5,7 @@ require_relative '../../lib/nexmo_rack'
 describe Nexmo::Rack::VerifySignature do
   before do
     ENV['NEXMO_SIGNATURE_SECRET'] = 'secret'
+    ENV['NEXMO_SIGNATURE_METHOD'] = 'md5hash'
     ENV.delete('NEXMO_SIGNATURE_REQUIRED')
   end
 
@@ -52,7 +53,14 @@ describe Nexmo::Rack::VerifySignature do
       ENV.delete('NEXMO_SIGNATURE_SECRET')
       expect {
         Rack::MockRequest.new(app).post('/', params: {'sig' => 'some_value'}) 
-      }.to raise_error "No credentials found for Nexmo::Rack::VerifySignature"
+      }.to raise_error "No signature credentials found for Nexmo::Rack::VerifySignature"
+    end
+
+    xit 'raises if no signature method are found' do
+      ENV.delete('NEXMO_SIGNATURE_METHOD')
+      expect {
+        Rack::MockRequest.new(app).post('/', params: {'sig' => 'some_value'}) 
+      }.to raise_error "No signature method found for Nexmo::Rack::VerifySignature"
     end
   end
 
