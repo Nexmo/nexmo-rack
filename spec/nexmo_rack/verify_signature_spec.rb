@@ -56,7 +56,7 @@ describe Nexmo::Rack::VerifySignature do
       }.to raise_error "No signature credentials found for Nexmo::Rack::VerifySignature"
     end
 
-    xit 'raises if no signature method are found' do
+    it 'raises if no signature method are found' do
       ENV.delete('NEXMO_SIGNATURE_METHOD')
       expect {
         Rack::MockRequest.new(app).post('/', params: {'sig' => 'some_value'}) 
@@ -88,7 +88,7 @@ describe Nexmo::Rack::VerifySignature do
     end
   end
 
-  context 'GET requests' do
+  context 'enforced signature verification' do
     it 'ignores any requests that do not contain a sig field by default' do
       response = Rack::MockRequest.new(app).post('/', params: {'example' => 'here'})
       expect(response.status).to eq(200)

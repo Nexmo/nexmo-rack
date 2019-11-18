@@ -4,6 +4,10 @@ module Nexmo
     class VerifySignature
       def initialize(app)
         @app = app
+        @nexmo = Nexmo::Client.new(
+          signature_secret: signature_secret,
+          signature_method: signature_method
+        )
       end
 
       def call(env)
@@ -19,7 +23,7 @@ module Nexmo
         end
 
         # Otherwise calculate the signature and check that it matches
-        if req.params['sig'] && nexmo_client.check(params)
+        if req.params['sig'] && @nexmo.signature.check(params)
           @app.call(env)
         else
           [403, {}, ['']]
@@ -27,12 +31,6 @@ module Nexmo
       end
 
       private
-
-      def nexmo_client
-        Nexmo::Signature.new(signature_secret)
-        # To be uncommented with the next release of the nexmo-ruby gem
-        # Nexmo::Signature.new(signature_secret, signature_method)
-      end
 
       def signature_secret
         if ENV['NEXMO_SIGNATURE_SECRET']
