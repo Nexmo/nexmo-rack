@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('rack', '~> 2.0', '>= 2.0.7')
   spec.add_development_dependency('simplecov', '~> 0.16')
   spec.add_development_dependency('coveralls', '~> 0.8.15')
+  spec.add_development_dependency('rspec', '~> 3.9')
 
   spec.metadata = {
     'homepage' => 'https://github.com/Nexmo/rack-verify-signature-middleware',
