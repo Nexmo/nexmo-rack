@@ -4,7 +4,8 @@ require_relative '../../lib/nexmo_rack'
 
 describe Nexmo::Rack::VerifySignature do
   before do
-    ENV['NEXMO_API_SIGNATURE'] = 'secret'
+    ENV['NEXMO_SIGNATURE_SECRET'] = 'secret'
+    ENV.delete('NEXMO_SIGNATURE_REQUIRED')
   end
 
   let(:app) do
@@ -48,7 +49,7 @@ describe Nexmo::Rack::VerifySignature do
 
   context 'credential checks' do
     it 'raises if no credentials are found' do
-      ENV.delete('NEXMO_API_SIGNATURE')
+      ENV.delete('NEXMO_SIGNATURE_SECRET')
       expect {
         Rack::MockRequest.new(app).post('/', params: {'sig' => 'some_value'}) 
       }.to raise_error "No credentials found for Nexmo::Rack::VerifySignature"
@@ -79,8 +80,16 @@ describe Nexmo::Rack::VerifySignature do
     end
   end
 
-  it 'ignores any requests that do not contain a sig field' do
-    response = Rack::MockRequest.new(app).post('/', params: {'example' => 'here'})
-    expect(response.status).to eq(200)
+  context 'GET requests' do
+    it 'ignores any requests that do not contain a sig field by default' do
+      response = Rack::MockRequest.new(app).post('/', params: {'example' => 'here'})
+      expect(response.status).to eq(200)
+    end
+
+    it 'validates all requests when signature validation is enforced' do
+      ENV['NEXMO_SIGNATURE_REQUIRED'] = 'true'
+      response = Rack::MockRequest.new(app).post('/', params: {'example' => 'here'})
+      expect(response.status).to eq(403)
+    end
   end
 end
