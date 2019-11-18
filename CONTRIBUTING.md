@@ -1,8 +1,15 @@
 # Contributing
 
-Thanks for considering contributing to Nexmo OAS Renderer! From typos, to sample code, tutorials and beyond, we truly appreciate and welcome input from everyone.
+Thanks for considering contributing to Nexmo's Rack middleware! From typos, to sample code, tutorials and beyond, we truly appreciate and welcome input from everyone.
 
-You can read all about our markdown additions, writing style guide and standard placeholders on our [Contributing page](https://developer.nexmo.com/contribute/overview). Once you have a change to share with us, read on ...
+## Running the tests
+
+This gem provides tests to ensure that future changes do not accidentally break existing functionality. To run the tests:
+
+```bash
+bundle install
+bundle exec rspec
+```
 
 ## Git process
 
