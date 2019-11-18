@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{lib}/**/*", "LICENSE.txt", "README.md"]
 
-  spec.add_runtime_dependency('nexmo', '~> 6.0.1')
+  spec.add_runtime_dependency('nexmo', '~> 6.1')
   spec.add_runtime_dependency('rack', '~> 2.0', '>= 2.0.7')
   spec.add_development_dependency('simplecov', '~> 0.16')
   spec.add_development_dependency('coveralls', '~> 0.8.15')

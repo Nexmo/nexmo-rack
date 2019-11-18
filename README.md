@@ -15,6 +15,33 @@ This repo contains Rack middleware that can be used to help integrate Nexmo in t
 
 The verify signature middleware can be used standalone or integrated into a Ruby application. The middleware will return a `403` HTTP status code if the signature is not valid, and will continue the application if it is valid.
 
+### Configuration
+
+You'll need to provide a Nexmo signature secret and signature method using either `ENV` variables or the Rails credentials system.
+
+`.env` example:
+
+```
+NEXMO_SIGNATURE_SECRET = 'your_secret_key'
+NEXMO_SIGNATURE_METHOD = 'md5hash'
+```
+
+Alternatively, you can specify them in the Rails credentials system
+
+```
+EDITOR="code --wait" rails credentials:edit
+```
+
+You can replace the EDITOR variable with your preferred editor. Once the credentials file is open, you are able to add the Nexmo credentials with the following namespacing:
+
+```yaml
+nexmo:
+    signature_secret: your_secret_key
+    signature_method: md5hash
+```
+
+Finally, this middleware will ignore any requests that do not contain a `sig` key. To enforce all requests to be validated, set `NEXMO_SIGNATURE_REQUIRED` to `true` in the environment.
+
 ### As a standalone application
 
 Install the gem on your system:
