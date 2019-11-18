@@ -8,16 +8,18 @@ module Nexmo
 
       def call(env)
         req = ::Rack::Request.new(env)
-        if req.post?
-          params = req.params.dup 
-          verify = nexmo_client
-          if verify.check(params)
-            @app.call(env)
-          else
-            [403, {}, ['']]
-          end
-        else
+
+        # Duplicate the request params in case nexmo_client.check() modifies them
+        params = req.params.dup
+
+        # If there is no `sig` field, ignore this middleware
+        return @app.call(env) unless req.params['sig']
+
+        # Otherwise calculate the signature and check that it matches
+        if nexmo_client.check(params)
           @app.call(env)
+        else
+          [403, {}, ['']]
         end
       end
 
@@ -25,15 +27,16 @@ module Nexmo
 
       def nexmo_client
         if ENV['NEXMO_API_SIGNATURE']
-          verify = Nexmo::Signature.new(
+          Nexmo::Signature.new(
             ENV['NEXMO_API_SIGNATURE']
           )
         elsif defined?(Rails) && Rails.application.credentials.nexmo
-          verify = Nexmo::Signature.new(
+          Nexmo::Signature.new(
             Rails.application.credentials.nexmo[:api_signature]
           )
+        else
+          raise "No credentials found for Nexmo::Rack::VerifySignature"
         end
-        verify
       end
     end
   end
