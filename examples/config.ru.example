@@ -1,9 +1,9 @@
-require 'verify_nexmo_signature'
+require 'nexmo_rack'
 
 #\ -w -p 8765  
 use Rack::Reloader, 0  
 use Rack::ContentLength
-use VerifyNexmoSignature::Middleware
+use Nexmo::Rack::VerifySignature
 
 class MyApp
   def call(env)
