@@ -2,4 +2,4 @@
 
 require 'nexmo'
 require 'rack'
-require_relative './verify_nexmo_signature/middleware'
+require_relative './nexmo_rack/verify_signature'

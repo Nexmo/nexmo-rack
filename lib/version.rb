@@ -1,5 +1,7 @@
 # :nocov:
-module VerifyNexmoSignature
-  VERSION = '0.1.0'
+module Nexmo
+  module Rack
+    VERSION = '0.2.0'
+  end
 end
 # :nocov:
