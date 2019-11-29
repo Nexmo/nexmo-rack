@@ -5,6 +5,8 @@ This repo contains Rack middleware that can be used to help integrate Nexmo in t
 * Verify [Nexmo signatures](https://developer.nexmo.com/concepts/guides/signing-messages).
 * Plus more to be added
 
+## Table of contents
+
 * [Installation and Usage](#installation-and-usage)
     * [As a standalone application](#as-a-standalone-application)
     * [Mounted into a Rails application](#mounted-into-a-rails-application)
