@@ -13,9 +13,6 @@ module Nexmo
       def call(env)
         req = ::Rack::Request.new(env)
 
-        # Duplicate the request params in case nexmo_client.check() modifies them
-        params = req.params.dup
-
         # If there is no `sig` field, ignore this middleware unless we explicitly
         # require it to be present
         unless ENV['NEXMO_SIGNATURE_REQUIRED']
@@ -23,7 +20,7 @@ module Nexmo
         end
 
         # Otherwise calculate the signature and check that it matches
-        if req.params['sig'] && @nexmo.signature.check(params)
+        if req.params['sig'] && @nexmo.signature.check(req.params)
           @app.call(env)
         else
           [403, {}, ['']]
