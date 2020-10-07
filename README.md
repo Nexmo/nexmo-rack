@@ -1,5 +1,7 @@
 # Nexmo Rack Middleware
 
+<img src="https://developer.nexmo.com/assets/images/Vonage_Nexmo.svg" height="48px" alt="Nexmo is now known as Vonage" />
+
 This repo contains Rack middleware that can be used to help integrate Nexmo in to your Rack-based application. It currently contains the following middleware:
 
 * Verify [Nexmo signatures](https://developer.nexmo.com/concepts/guides/signing-messages).
