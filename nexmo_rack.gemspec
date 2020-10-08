@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors     = ["Nexmo"]
   spec.email       = ["devrel@nexmo.com"]
   spec.homepage    = "https://github.com/Nexmo/nexmo-rack"
-  spec.summary     = "Nexmo related middleware to make it easier to work with Nexmo's webhooks. To use it you'll need a Nexmo account. Sign up for free at https://www.nexmo.com"
+  spec.summary     = "Nexmo related middleware to make it easier to work with Nexmo's webhooks. To use it you'll need a Nexmo account. Sign up for free at https://dashboard.nexmo.com/sign-up"
   spec.description = "Nexmo related middleware to make it easier to work with Nexmo's webhooks"
   spec.license     = "MIT"
 
