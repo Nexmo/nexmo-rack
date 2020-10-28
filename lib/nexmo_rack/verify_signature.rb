@@ -13,7 +13,8 @@ module Nexmo
       def call(env)
         req = ::Rack::Request.new(env)
 
-        # Duplicate the request params in case nexmo_client.check() modifies them
+        # Duplicate the req.params.dup in case nexmo_client.check() modifies them
+        #the copy of req.params.dup is now stored in params
         params = req.params.dup
 
         # If there is no `sig` field, ignore this middleware unless we explicitly
@@ -29,6 +30,7 @@ module Nexmo
           [403, {}, ['']]
         end
       end
+#if matches then the first case will be executed if not then the other one.
 
       private
 
@@ -51,7 +53,7 @@ module Nexmo
           raise "No signature method found for Nexmo::Rack::VerifySignature"
         end
       end
-
+#Matching complete.
     end
   end
 end
